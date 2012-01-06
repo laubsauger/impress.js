@@ -1,4 +1,12 @@
-jQuery(document).ready(function(){
-	var url_el = getElementFromUrl();
-	console.log('url_el: ' + url_el + ' | Impress.js Studio started');
+jQuery(document).ready(function() {
+	jQuery(document).on("click", ".step", function() {
+		var el = jQuery(this);
+		el.addClass('edit');
+		
+		jQuery(document).on('focusout', el, function() {
+			el.removeClass('edit');
+		});
+	});
+	
+	
 });

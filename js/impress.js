@@ -8,16 +8,7 @@
  *
  * Copyright 2011 Bartek Szopka (@bartaz)
  */
-var id;
 
-function byId ( id ) {
-	return document.getElementById(id);
-}
-
-function getElementFromUrl () {
-	return byId( window.location.hash.replace(/^#\/?/,"") );
-}
-	
 (function ( document, window ) {
 
     // HELPER FUNCTIONS
@@ -66,10 +57,9 @@ function getElementFromUrl () {
         return el;
     }
     
-	/*
     var byId = function ( id ) {
         return document.getElementById(id);
-    }*/
+    }
 	
     var $ = function ( selector, context ) {
         context = context || document;
@@ -316,12 +306,11 @@ function getElementFromUrl () {
         }
     });
     
-	/*
     var getElementFromUrl = function () {
         // get id from url # by removing `#` or `#/` from the beginning,
         // so both "fallback" `#slide-id` and "enhanced" `#/slide-id` will work
         return byId( window.location.hash.replace(/^#\/?/,"") );
-    }*/
+    }
 	
     window.addEventListener("hashchange", function () {
         select( getElementFromUrl() );
@@ -332,4 +321,3 @@ function getElementFromUrl () {
     select( getElementFromUrl() || steps[0]);
 
 })(document, window);
-
