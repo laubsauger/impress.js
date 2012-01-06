@@ -91,8 +91,8 @@
     
     var ua = navigator.userAgent.toLowerCase();
     var impressSupported = ( pfx("perspective") != null ) &&
-                           ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) == -1 );
-    
+                         //  ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) == -1 );
+							 ( ua.search(/(iphone)|(ipod)/) == -1 );
     // DOM ELEMENTS
     
     var impress = byId("impress");
