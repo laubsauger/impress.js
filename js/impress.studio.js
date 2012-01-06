@@ -1,3 +1,4 @@
 jQuery(document).ready(function(){
-	console.log('Impress.js Studio started');
+	var url_el = getElementFromUrl();
+	console.log('url_el: ' + url_el + ' | Impress.js Studio started');
 });
