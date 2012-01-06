@@ -60,7 +60,7 @@
     var byId = function ( id ) {
         return document.getElementById(id);
     }
-    
+	
     var $ = function ( selector, context ) {
         context = context || document;
         return context.querySelector(selector);
@@ -76,9 +76,9 @@
     };
     
     var rotate = function ( r, revert ) {
-        var rX = " rotateX(" + r.x + "deg) ",
-            rY = " rotateY(" + r.y + "deg) ",
-            rZ = " rotateZ(" + r.z + "deg) ";
+        var rX	= " rotateX(" + r.x + "deg) ",
+			 rY	= " rotateY(" + r.y + "deg) ",
+             rZ   	= " rotateZ(" + r.z + "deg) ";
         
         return revert ? rZ+rY+rX : rX+rY+rZ;
     };
@@ -91,8 +91,8 @@
     
     var ua = navigator.userAgent.toLowerCase();
     var impressSupported = ( pfx("perspective") != null ) &&
-                           ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) == -1 );
-    
+                        ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) == -1 );
+						 
     // DOM ELEMENTS
     
     var impress = byId("impress");
@@ -311,14 +311,13 @@
         // so both "fallback" `#slide-id` and "enhanced" `#/slide-id` will work
         return byId( window.location.hash.replace(/^#\/?/,"") );
     }
-    
+	
     window.addEventListener("hashchange", function () {
         select( getElementFromUrl() );
     }, false);
     
     // START 
     // by selecting step defined in url or first step of the presentation
-    select(getElementFromUrl() || steps[0]);
+    select( getElementFromUrl() || steps[0]);
 
 })(document, window);
-

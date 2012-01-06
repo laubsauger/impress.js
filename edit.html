@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>impress.js Studio  |  presentation creator based on the presentation tool impress.js by Bartek Szopka @bartaz | by laubsauger</title>
+    
+    <meta name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com.">
+    <meta name="author" content="Bartek Szopka" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <link href="css/style.css" rel="stylesheet" />
+	<link href="css/style.studio.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="impress" class="impress-not-supported">
+
+    <div class="fallback-message">
+        <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+        <p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
+    </div>
+
+    <div class="step slide" data-x="-1000" data-y="-1500">
+        <q>Aren't you already <b>bored</b> by building impress.js presentations with notepad?</q>
+    </div>
+
+    <div class="step slide" data-x="1000" data-y="-1500">
+        <q>Would you like to to use <strong>3D Drag/Drop Grid Action</strong> to produce <strong>stunning visualization</strong> even easier?</q>
+    </div>
+
+    <div id="title" class="step" data-x="0" data-y="0" data-scale="3">
+        <span class="try">then you should try</span>
+        <h1>impress.js<sup>*</sup> Studio</h1>
+        <span class="footnote"><sup>*</sup> i guess there is still no rhyme intended</span>
+    </div>
+
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+
+<div class="hint">
+    <p>You're in Edit Mode</p>
+</div>
+
+<div id="floatingbar"><ul><li><a href="#/overview">Overview</a></li><li><a>Add</a></li><li><a>Move</a></li><li><a>Style</a></li></ul></div>
+
+<script src="js/impress.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="js/impress.studio.js"></script>
+</body>
+</html>
