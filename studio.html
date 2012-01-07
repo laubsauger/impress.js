@@ -14,14 +14,13 @@
 <body>
 <!-- BEGIN presentation content -->
 <div id="impress" class="impress-not-supported">
-
     <div class="fallback-message">
         <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
         <p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
     </div>
 	
     <div id="title" class="step" data-x="0" data-y="0" data-z="0" >
-        <q>Aren't you already <b>bored</b> by building impress.js presentations with notepad?</q>
+        <q>Aren't you already <b>bored</b> by building impress.js presentations with <i>notepad?</i></q>
     </div>
 	
 	<div class="step slide" data-x="3500" data-y="0" data-z="0" data-scale="3">
@@ -36,26 +35,35 @@
         <q><b>:)</b></q>
     </div>
 
-    <div id="overview" class="step" data-x="0" data-y="0" data-z="0" data-scale="10">
+    <div id="overview" class="step" data-x="0" data-y="2500" data-z="0" data-scale="15">
     </div>
-
 </div>
 
 <div class="hint">
     <p>You're in Edit Mode</p>
 </div>
 <!-- END presentation content -->
+
 <!-- Menu -->
-<div class="menu" id="toolbar">
-	<ul>
-		<li><a class="menu-item menu-overview" href="#/overview">Overview</a></li>
-		<li><a class="menu-item menu-add">Add</a></li>
-		<li><a class="menu-item menu-edit" href="#/overview">Edit</a></li>
-		<li><a class="menu-item menu-styles" href="#/overview">Styles</a></li>
-		<li><a class="menu-item menu-styles">Themes</a></li>
-	</ul>
+<div class="menu-wrapper">
+	<div class="menu" id="toolbar">
+		<ul>
+			<li><a class="menu-item-no-sub" id="menu-overview" href="#/overview" >Overview</a></li>
+			<li><a class="menu-item" id="menu-add" >Add</a></li>
+			<li><a class="menu-item" id="menu-edit" >Edit</a></li>
+			<li><a class="menu-item" id="menu-styles" >Styles</a></li>
+			<li><a class="menu-item" id="menu-themes" >Themes</a></li>
+		</ul>
+	</div>
+	<p class="submenu menu-add-sub" id="1">Clone</p>
+	<p class="submenu menu-add-sub" id="2">New</p>
+	<p class="submenu menu-edit-sub" id="1">Content</p>
+	<p class="submenu menu-edit-sub" id="2">Position</p>
+	<p class="submenu menu-styles-sub" id="1">Manage</p>
+	<p class="submenu menu-themes-sub" id="1">Browse</p>
 </div>
 
+<!-- Menu End-->
 <script src="js/impress.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="js/impress.studio.js"></script>
