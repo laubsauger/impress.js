@@ -16,37 +16,37 @@
 jQuery(document).ready(function() {
 	var submenu_id_old; 
 	
-	function displayHideSubMenu(oMenuitem, oSubmenu, position, iPos_bottom) {
-		$(oSubmenu).each(function(index, domEle){
-				var sub_id = parseInt($(domEle).attr('id'));
+	function displayHideSubMenu(oMenuitem, oSubmenu, position) {
+		jQuery(oSubmenu).each(function(index, domEle){
+				var sub_id 	= parseInt($(domEle).attr('id')),
+				iPos_bottom = (position.bottom || 0) + 45;
 				iPos_bottom = iPos_bottom + (29 * (sub_id-1));
-				$(domEle).appendTo(oMenuitem).fadeIn().css({left: position.left, bottom: iPos_bottom});
-				$('.menu').after(oSubmenu);
+				jQuery(domEle).appendTo(oMenuitem).fadeIn().css({left: position.left, bottom: iPos_bottom});
+				jQuery('.menu').after(oSubmenu);
 		});
 	};
 	
 	jQuery('.menu-item').bind('click', function() {
-		var menuitem 	= $(this),
-		position 		= $(menuitem).position(),	
-		pos_bottom 		= (position.bottom || 0) + 42,
-		submenu_id 		= $(menuitem).attr('id'),
-		classSubMenu 	= $('.submenu'),
-		submenu 		= $('.' + submenu_id + '-sub'),
-		submenu_vis_ln	= $('.submenu:visible').length;
+		var menuitem 	= jQuery(this),
+		position 		= jQuery(menuitem).position(),	
+		submenu_id 		= jQuery(menuitem).attr('id'),
+		classSubMenu 	= jQuery('.submenu'),
+		submenu 		= jQuery('.' + submenu_id + '-sub'),
+		submenu_vis_ln	= jQuery('.submenu:visible').length;
 		
-		$(menuitem).toggleClass('menu-item-active');
+		jQuery(menuitem).toggleClass('menu-item-active');
 		
 		if(submenu_vis_ln == 0 ) {
-			displayHideSubMenu(menuitem, submenu, position, pos_bottom);
-		} else if (submenu_id_old == submenu_id){
-			$(classSubMenu).hide();
+			displayHideSubMenu(menuitem, submenu, position);
+		} else if (submenu_id_old == submenu_id) {
+			jQuery(classSubMenu).hide();
 		} else if (submenu_id_old != submenu_id) {
-			$(classSubMenu).hide();
-			displayHideSubMenu(menuitem, submenu, position, pos_bottom);
+			jQuery(classSubMenu).hide();
+			displayHideSubMenu(menuitem, submenu, position);
 		}
 		
 		jQuery('.menu-item-no-sub').bind('click', function() {
-			$(classSubMenu).hide();
+			jQuery(classSubMenu).hide();
 		});
 		
 		submenu_id_old = submenu_id;
