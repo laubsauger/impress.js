@@ -8,8 +8,9 @@
     <meta name="author" content="Bartek Szopka" />
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
-
-	<link href="css/impress.studio.style.css" rel="stylesheet" />
+	
+	<link href="css/ui-darkness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+	<link href="css/impress.studio.style.css" rel="stylesheet"/>
 </head>
 <body>
 <!-- BEGIN presentation content -->
@@ -22,7 +23,6 @@
     <div id="title" class="step" data-x="0" data-y="0" data-z="0" >
         <q>Aren't you already <b>bored</b> by building impress.js presentations with <i>notepad?</i></q>
     </div>
-	
 	<div class="step slide" data-x="3500" data-y="0" data-z="0" data-scale="3">
         <q><b>Yes</b>, you are!</q>
     </div>
@@ -56,19 +56,37 @@
 			<li style="float: right;"><a class="menu-item" id="menu-themes" >Themes</a></li>
 		</ul>
 	</div>
+	<!-- Export/Import source through textarea or whatever -->
 	<p class="submenu menu-file-sub" data-submenu-id="1" data-submenu-func="save">Save</p>
 	<p class="submenu menu-file-sub" data-submenu-id="2" data-submenu-func="load">Load</p>
+	<!-- Insert new Step / Clone selected Step -->
 	<p class="submenu menu-add-sub" data-submenu-id="1" data-submenu-func="clone">Clone Step</p>
 	<p class="submenu menu-add-sub" data-submenu-id="2" data-submenu-func="new-step">New Step</p>
+	<!-- Edit content/position of the selected Step -->
 	<p class="submenu menu-edit-sub" data-submenu-id="1" data-submenu-func="edit-content">Content</p>
 	<p class="submenu menu-edit-sub" data-submenu-id="2" data-submenu-func="edit-position">Position</p>
+	<!-- something with styles -->
 	<p class="submenu menu-styles-sub" data-submenu-id="1" data-submenu-func="view-styles">Manage</p>
+	<!-- themes? crazy shit... -->
 	<p class="submenu menu-themes-sub" data-submenu-id="1" data-submenu-func="view-themes">Browse</p>
 </div>
-
 <!-- Menu End-->
+
+<!-- Editor Gizmo -->
+<div class="edit edit-frame"></div>
+<!-- Editor Gizmo End -->
+
+<!-- Widgets -->
+<div id="dialog" class="widget edit-position">
+	<p>PosX: <span></span></p>
+	<p>PosY: <span></span></p>
+	<p>PosZ: <span></span></p>
+</div>
+<!-- Widgets End -->
+
 <script src="js/impress.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 <script src="js/impress.studio.js"></script>
 </body>
 </html>
