@@ -9,7 +9,7 @@
  * Copyright 2011 Bartek Szopka (@bartaz)
  */
 
-(function ( document, window ) {
+function drawCanvas( document, window ) {
 
     // HELPER FUNCTIONS
     
@@ -320,4 +320,6 @@
     // by selecting step defined in url or first step of the presentation
     select( getElementFromUrl() || steps[0]);
 
-})(document, window);
+}(document, window);
+
+drawCanvas (document, window);
