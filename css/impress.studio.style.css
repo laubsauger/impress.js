@@ -278,6 +278,36 @@ div.menu {
 }
  
 @media screen {
+	div.livelog {
+		position: absolute;
+		padding: 5px;
+		left: 0px;
+		top: 0px;
+		width: 350px;
+		height: 125px;
+		background: rgba(0,0,0,0.1);
+		font-size: 11px;
+		color: rgba(255,255,255,0.9);
+		overflow: auto;
+	}
+	
+	div.livelog p {
+		margin-bottom: 2px;
+	}
+	
+	::-webkit-scrollbar {
+		height: 5px;
+		width: 4px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: rgba(255,255,255,0.7);
+	}
+
+	::-webkit-scrollbar-track {
+		background: rgba(100,100,100,0.9);
+	}
+	
 	body > div.menu {
 		position: fixed;
 	}
@@ -296,7 +326,7 @@ div.menu {
 		text-decoration: none;
 		padding: 0 0.75em;
 		background: none;
-		text-shadow: -1px -1px 2px rgba(100,100,100,0.9);
+		text-shadow: -1px -1px 2px rgba(100,100,100,0.7);
 		border-radius: 0.3em;
 	}
 	
@@ -306,16 +336,32 @@ div.menu {
 		text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
 	}
 	
+	.menu a:active {
+		cursor: pointer;
+		background: rgba(215,215,215,1);
+		text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
+	}
+	
 	.submenu {
-	background: rgba(255,255,255,0.6);
-	display: none;
-	min-width: 85px;
+		background: rgba(255,255,255,0.7);
+		display: none;
+		min-width: 85px;
 		padding-top: 3px;
 		padding-bottom: 3px;
 		padding-left: 5px;
 		border: 1px solid #000;
 		position:absolute;
 	}
+	
+	.submenu:hover {
+		background: rgba(220,220,220,0.7);
+	}
+	
+	.submenu:active {
+		background: rgba(215,215,215,0.8);
+	}
+	
+	
 	.widget {
 		display: none;
 	}
@@ -334,6 +380,10 @@ div.menu {
 	
 	.edit-position span {
 		font-weight: bold;
+	}
+	
+	.edit-position #refresh-position {
+		display: inline;
 	}
 }
 

@@ -11,7 +11,8 @@ function createMenu() {
 	'use strict';
 	
 	var submenu_cat_old, 
-		submenu_all = jQuery('.submenu');
+		submenu_all = jQuery('.submenu'),
+		livelog_div = jQuery('.livelog');
 		
 	function displaySubmenu(oMenuitem, osubmenu, position) {
 		jQuery(osubmenu).each(function(index, domEle){
@@ -25,34 +26,44 @@ function createMenu() {
 			jQuery('.menu').after(osubmenu);
 		});
 	}	
+
+	function livelog (elem, msg) {
+		$(elem).html($(elem).html() + "<p> " + msg + "</p>");	
+		//keep log scrolled to bottom
+		$(elem).prop('scrollTop', $(elem).prop('scrollHeight'));
+	}
 	
 	function openWidget(step, operation) {
 		var stepData, 
 			stepDim, 
-			widget = jQuery('.widget.' + operation);
+			widget = jQuery('.widget.' + operation),
+			title;
 	
-		jQuery('.widget.' + operation)
-			.dialog("destroy")
+		jQuery(widget).dialog("destroy")
 			.dialog({ 
-				title: 'step: ' + jQuery(step).attr('id') + ' | op: ' + operation,
+				title: operation + " | ",
 				position: 'left'
 			}).show();
 			
-			if(operation === 'edit-position') {
-				stepData = getStepData(step);
-				stepDim	 = getStepDim(step);
-					
-				
-				jQuery('#height').text(Math.round((stepDim.height * 100)/100));
-				jQuery('#width').text(Math.round((stepDim.width * 100)/100));
-				jQuery('#top').text(Math.round((stepDim.top * 100)/100));
-				jQuery('#left').text(Math.round((stepDim.left * 100)/100));
-				
-				jQuery('#data-x').text(Math.round((stepData.x * 100)/100));
-				jQuery('#data-y').text(Math.round((stepData.y * 100)/100));
-				jQuery('#data-z').text(Math.round((stepData.z * 100)/100));
+		if(operation === 'edit-position') {
+			stepData = getStepData(step);
+			stepDim = getStepDim(step);
+			title = jQuery(widget).dialog('option','title');
 			
-			}
+			jQuery(widget).dialog('option','title',title + jQuery(step).attr('id'));
+			
+			jQuery('#height').text(stepDim.height);
+			jQuery('#width').text(stepDim.width);
+			jQuery('#top').text(stepDim.top);
+			jQuery('#left').text(stepDim.left);
+			
+			jQuery('#data-x').text(stepData.x);
+			jQuery('#data-y').text(stepData.y);
+			jQuery('#data-z').text(stepData.z);
+		} else if (operation === 'save') {
+			//title = jQuery(widget).dialog('option','title');
+			//jQuery(widget).dialog('option','title',title + '');
+		}
 	}
 	
 	function addNewStep () {
@@ -77,17 +88,17 @@ function createMenu() {
                     x: $(step).data('x') || 0,
                     y: $(step).data('y') || 0,
                     z: $(step).data('z') || 0
-				};
+			};
 		return stepData;
 	}
 	
 	function getStepDim (step) {
 		var pos = jQuery(step).position(),
 			stepDimension = {
-				height: jQuery(step).height(),
-				width: 	jQuery(step).width(),
-				top: 	pos.top,
-				left: 	pos.left
+				height: Math.round((jQuery(step).height() * 100)/100),
+				width: 	Math.round(jQuery(step).width() * 100/100),
+				top: 	Math.round((pos.top * 100)/100),
+				left: 	Math.round((pos.left * 100)/100)
 			};
 		return stepDimension;
 	}
@@ -111,19 +122,18 @@ function createMenu() {
 	//right click step to select it for editing
 	jQuery('.step').bind('contextmenu', function(e) {
 		var step_selected 	= jQuery('.step-selected'), 
-			stepPos 		= jQuery(this).position(),
-			stepHeight		= jQuery(this).height(),
-			stepWidth		= jQuery(this).width(),
-			editFrame 		= jQuery('.edit-frame');
+			editFrame 		= jQuery('.edit-frame'),
+			stepDim 		= getStepDim (this);
 			
-		e.preventDefault();
-		console.log("X " + stepPos.left + " Y: " + stepPos.top);
-		console.log(stepHeight + " x " + stepWidth);
+		livelog (livelog_div, "<b>" + this.getAttribute('id') + " </b> selected");
+		livelog (livelog_div,"Dim " + stepDim.height + " x " + stepDim.width + " | X " + stepDim.left + " Y: " + stepDim.top);
 		
+		//highlight selected frame
 		jQuery(this).toggleClass('step-selected');
 		jQuery('.step-selected').not(this).removeClass('step-selected');
 			
 		//prevent contextmenu default action
+		e.preventDefault();
 		return false;
 	});
 	
@@ -149,6 +159,7 @@ function createMenu() {
 			jQuery(submenu_all).hide();
 		});
 		
+		//preserve last used submenu category
 		submenu_cat_old = submenu_cat;
 	});
 
@@ -160,37 +171,38 @@ function createMenu() {
 			jQuery(submenu_all).hide();
 			switch (submenuFunc) {
 				case "save": 
-					console.log("submenu:save");
+					livelog (livelog_div,"<i>submenu:save</i>");
+					openWidget(step, submenuFunc);
 					break;
 
 				case "load": 
-					console.log("submenu:load");
+					livelog (livelog_div,"<i>submenu:load</i>");
 					break;
 
 				case "clone": 
-					console.log("submenu:clone");
+					livelog (livelog_div,"<i>submenu:clone</i>");
 					
 					//recreate "canvas" after dom-manipulation
 					//drawCanvas(document, window);
 					break;
 
 				case "new-step": 
-					console.log("submenu:new-step");
+					livelog (livelog_div,"<i>submenu:new-step</i>");
 					break;
 
 				case "edit-content": 
-					console.log("submenu:edit-content");
+					livelog (livelog_div,"<i>submenu:edit-content</i>");
 					break;
 				
 				case "edit-position":
-					console.log("submenu:edit-position");
+					livelog (livelog_div,"<i>submenu:edit-position</i>");
 					
 					var step = jQuery('.step-selected');
 					
 					if(step.length > 0) {
 						openWidget(step, submenuFunc);
 					}else {
-						console.log('-no step selected');
+						livelog (livelog_div,'--no step was selected!');
 					}
 					
 					//recreate "canvas" after dom-manipulation
@@ -198,14 +210,14 @@ function createMenu() {
 					break;
 					
 				case "view-styles": 
-					console.log("submenu:view-styles");
+					livelog (livelog_div,"<i>submenu:view-styles</i>");
 					break;
 					
 				case "view-themes": 
-					console.log("submenu:view-themes");
+					livelog (livelog_div,"<i>submenu:view-themes</i>");
 					break;
 
-				default: console.log("submenu:function not found - " + submenuFunc); 
+				default: livelog (livelog_div,"<i>submenu:function not found - " + submenuFunc + "</i>"); 
 			}
 		});
 	});

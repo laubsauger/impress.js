@@ -29,12 +29,8 @@
 	<div class="step" data-x="3500" data-y="7500" data-z="2500" data-scale="3">
         <q><b>impress.js studio</b></q>
     </div>
-	
-	<div id="giggidi" class="step" data-x="1500" data-y="7500" data-z="2500" data-scale="10">
-        <q><b>:)</b></q>
-    </div>
 
-    <div id="overview" class="step" data-x="0" data-y="2500" data-z="0" data-scale="15">
+	<div id="overview" class="step" data-x="0" data-y="2500" data-z="0" data-scale="15">
     </div>
 </div>
 
@@ -44,6 +40,7 @@
 <!-- END presentation content -->
 
 <!-- Menu -->
+<div class="livelog"></div>
 <div class="menu-wrapper">
 	<div class="menu" id="toolbar">
 		<ul>
@@ -71,12 +68,13 @@
 </div>
 <!-- Menu End-->
 
-<!-- Editor Gizmo -->
-<div class="edit edit-frame"></div>
-<!-- Editor Gizmo End -->
-
 <!-- Widgets -->
+<div id="dialog" class="widget save">
+<p><input type="textarea"/></p>
+</div>
+
 <div id="dialog" class="widget edit-position">
+	<span id="refresh-position">Refresh</span>
 	<p><label>Height</label><span id="height">H</span></p>
 	<p><label>Width</label><span id="width">W</span></p>
 	<p><label>Top</label><span id="top">T</span></p>
