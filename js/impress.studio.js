@@ -31,7 +31,7 @@ function createMenu() {
 			stepDim, 
 			widget = jQuery('.widget.' + operation);
 	
-		jQuery(widget)
+		jQuery('.widget.' + operation)
 			.dialog("destroy")
 			.dialog({ 
 				title: 'step: ' + jQuery(step).attr('id') + ' | op: ' + operation,
@@ -39,7 +39,7 @@ function createMenu() {
 			}).show();
 			
 			if(operation === 'edit-position') {
-				stepData = getStepData(step),
+				stepData = getStepData(step);
 				stepDim	 = getStepDim(step);
 					
 				
@@ -82,9 +82,8 @@ function createMenu() {
 	}
 	
 	function getStepDim (step) {
-		var pos = jQuery(step).position(); 
-		var	stepDimension; 
-		stepDimension = {
+		var pos = jQuery(step).position(),
+			stepDimension = {
 				height: jQuery(step).height(),
 				width: 	jQuery(step).width(),
 				top: 	pos.top,
@@ -211,5 +210,4 @@ function createMenu() {
 		});
 	});
 }
-
 jQuery(document).ready( createMenu() );
