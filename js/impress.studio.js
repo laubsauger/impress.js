@@ -82,21 +82,37 @@ function createMenu() {
 			moveY, 
 			moveZ,
 			stepData = getStepData(step),
-			stepDim = getStepDim(step);
+			stepDim = getStepDim(step),
+			options = {
+					buttons: {
+						"Refresh": function() {
+							//Reload position (real and data) for step
+							refreshWidgetData();
+						},
+						"Apply": function() {
+							//Apply new position (real and/or data) to step
+						}
+					},
+					width: 215,
+					title: title + jQuery(step).attr('id')
+				};
+				
+			function refreshWidgetData () {
+				jQuery(widget).children().children('input').val(0);
+				stepDim = getStepDim(step);
+				
+				jQuery('#height').text(stepDim.height);
+				jQuery('#width').text(stepDim.width);
+				jQuery('#top').text(stepDim.top);
+				jQuery('#left').text(stepDim.left);
+				
+				jQuery('#data-x').text(stepData.x);
+				jQuery('#data-y').text(stepData.y);
+				jQuery('#data-z').text(stepData.z);
+			}			
 			
-			jQuery(widget).dialog('option','title',title + jQuery(step).attr('id'));
-			
-			jQuery('#height').text(stepDim.height);
-			jQuery('#width').text(stepDim.width);
-			jQuery('#top').text(stepDim.top);
-			jQuery('#left').text(stepDim.left);
-			
-			jQuery('#data-x').text(stepData.x);
-			jQuery('#data-y').text(stepData.y);
-			jQuery('#data-z').text(stepData.z);
-		//moveX = 30;
-		//moveY = 150;
-		//moveZ = 200;
+			jQuery(widget).dialog('option',options);
+			refreshWidgetData();
 		
 		//moveStep(step, moveX, moveY, moveZ);
 		//rotateStep(step, rotateX, rotateY, rotateZ);

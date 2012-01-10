@@ -20,10 +20,15 @@
     </div>
 	
     <div id="title" class="step" data-x="0" data-y="0" data-z="0" >
-        <q>Aren't you already <b>bored</b> by building impress.js presentations with <i>notepad?</i></q>
+        <q>Aren't you already <b>bored</b> by building impress.js presentations with <i>notepad?</i>
+		</q>
     </div>
 	<div class="step slide" data-x="3500" data-y="0" data-z="0" data-scale="3">
         <q><b>Yes</b>, you are!</q>
+		<p>Cure:</p>
+		<p>1. Right Click to select a Step</p>
+		<p>2. Use toolbar functions to manipulate</p>
+		<p>3. Export html source to clipboard using File &gt Save</p>
     </div>
 	
 	<div class="step" data-x="3500" data-y="7500" data-z="2500" data-scale="3">
@@ -40,7 +45,7 @@
 <!-- END presentation content -->
 
 <!-- Menu -->
-<div class="livelog"></div>
+<div class="livelog-wrapper"><div class="livelog"></div></div>
 <div class="menu-wrapper">
 	<div class="menu" id="toolbar">
 		<ul>
@@ -74,15 +79,14 @@
 </div>
 
 <div id="dialog" class="widget edit-position">
-	<span id="refresh-position">Refresh</span>
-	<p><label>Height</label><span id="height">H</span></p>
-	<p><label>Width</label><span id="width">W</span></p>
-	<p><label>Top</label><span id="top">T</span></p>
-	<p><label>Left</label><span id="left">L</span></p>
+	<p><label>Height</label><span id="height">H</span>	+/- <input type="text" size="3" value=""/> <b>px</b></p>
+	<p><label>Width</label><span id="width">W</span>	+/- <input type="text" size="3" value=""/> <b>px</b></p>
+	<p><label>Top</label><span id="top">T</span>		+/- <input type="text" size="3" value=""/> <b>px</b></p>
+	<p><label>Left</label><span id="left">L</span>		+/- <input type="text" size="3" value=""/> <b>px</b></p>
 	<hr/>
-	<p><label>DataX</label><span id="data-x">data-x</span> </p>
-	<p><label>DataY</label><span id="data-y">data-y</span> </p>
-	<p><label>DataZ</label><span id="data-z">data-z</span> </p>
+	<p><label>Data X</label><span id="data-x">data-x</span> +/- <input type="text" size="3" value=""/> <b>px</b></p>
+	<p><label>Data Y</label><span id="data-y">data-y</span> +/- <input type="text" size="3" value=""/> <b>px</b></p>
+	<p><label>Data Z</label><span id="data-z">data-z</span> +/- <input type="text" size="3" value=""/> <b>px</b></p>
 </div>
 <!-- Widgets End -->
 
