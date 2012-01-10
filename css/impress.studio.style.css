@@ -283,8 +283,8 @@ div.menu {
 		padding: 5px;
 		left: 0px;
 		top: 0px;
-		width: 350px;
-		height: 125px;
+		width: 225px;
+		height: 150px;
 		background: rgba(0,0,0,0.1);
 		font-size: 11px;
 		color: rgba(255,255,255,0.9);
@@ -292,12 +292,12 @@ div.menu {
 	}
 	
 	div.livelog p {
-		margin-bottom: 2px;
+		margin-bottom: 3px;
 	}
 	
 	::-webkit-scrollbar {
 		height: 5px;
-		width: 4px;
+		width: 5px;
 	}
 
 	::-webkit-scrollbar-thumb {
@@ -368,6 +368,11 @@ div.menu {
 	
 	.ui-widget {
 		font-size: 12px;
+	}
+	
+	.widget textarea {
+		color: rgba(255, 255, 255, 1);
+		background-color: rgba(175, 175, 175, 0.8);
 	}
 	
 	.edit-position label {

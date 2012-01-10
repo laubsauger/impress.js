@@ -45,10 +45,44 @@ function createMenu() {
 				position: 'left'
 			}).show();
 			
-		if(operation === 'edit-position') {
-			stepData = getStepData(step);
-			stepDim = getStepDim(step);
 			title = jQuery(widget).dialog('option','title');
+			
+		if(operation === 'edit-position') {
+			editPosition(step, widget, title);
+		} else if (operation === 'save') {
+			save (step, widget, title);
+		}
+	}
+	
+	function addNewStep (id, className, content) {
+		//mockmock
+	}
+	
+	function save (step, widget, title) {
+		var container = $('#impress'), 
+				htmlStr, jsFile, cssFile,
+				options = {
+					buttons: {
+						"to Clipboard": function() { $(this).dialog("close"); }
+					},
+					width: 500,
+					title: title + '<b style="color: red;">unclean solution - uses already manipulated DOMtree - but works :D</b>'
+				};
+				
+		jQuery(widget).dialog( "option", options);
+		htmlStr = $('#impress').html();
+		htmlStr = htmlStr.replace('class="canvas"', 'id="impress"');
+		jsFile = '<script src="js/impress.js"></script>';
+		cssFile = 	'<link href="css/impress-demo.css" rel="stylesheet"/>';
+		$('.widget.save textarea').text(cssFile + htmlStr + jsFile);
+	}
+	
+	function editPosition(step, widget, title) {
+		var moveX, 
+			moveY, 
+			moveZ,
+			stepData = getStepData(step),
+			stepDim = getStepDim(step);
 			
 			jQuery(widget).dialog('option','title',title + jQuery(step).attr('id'));
 			
@@ -60,21 +94,6 @@ function createMenu() {
 			jQuery('#data-x').text(stepData.x);
 			jQuery('#data-y').text(stepData.y);
 			jQuery('#data-z').text(stepData.z);
-		} else if (operation === 'save') {
-			//title = jQuery(widget).dialog('option','title');
-			//jQuery(widget).dialog('option','title',title + '');
-		}
-	}
-	
-	function addNewStep () {
-		//mockmock
-	}
-	
-	function editPosition(step) {
-		var moveX, 
-			moveY, 
-			moveZ;
-		
 		//moveX = 30;
 		//moveY = 150;
 		//moveZ = 200;
@@ -96,7 +115,7 @@ function createMenu() {
 		var pos = jQuery(step).position(),
 			stepDimension = {
 				height: Math.round((jQuery(step).height() * 100)/100),
-				width: 	Math.round(jQuery(step).width() * 100/100),
+				width: 	Math.round((jQuery(step).width() * 100)/100),
 				top: 	Math.round((pos.top * 100)/100),
 				left: 	Math.round((pos.left * 100)/100)
 			};
@@ -126,7 +145,7 @@ function createMenu() {
 			stepDim 		= getStepDim (this);
 			
 		livelog (livelog_div, "<b>" + this.getAttribute('id') + " </b> selected");
-		livelog (livelog_div,"Dim " + stepDim.height + " x " + stepDim.width + " | X " + stepDim.left + " Y: " + stepDim.top);
+		livelog (livelog_div, "X " + stepDim.left + " Y: " + stepDim.top + " | Dim " + stepDim.height + " x " + stepDim.width);
 		
 		//highlight selected frame
 		jQuery(this).toggleClass('step-selected');
