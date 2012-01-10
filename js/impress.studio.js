@@ -31,7 +31,7 @@ function createMenu() {
 			stepDim, 
 			widget = jQuery('.widget.' + operation);
 	
-		jQuery(widget)
+		jQuery('.widget.' + operation)
 			.dialog("destroy")
 			.dialog({ 
 				title: 'step: ' + jQuery(step).attr('id') + ' | op: ' + operation,
@@ -82,9 +82,8 @@ function createMenu() {
 	}
 	
 	function getStepDim (step) {
-		var pos = jQuery(step).position(); 
-		var	stepDimension; 
-		stepDimension = {
+		var pos = jQuery(step).position(),
+			stepDimension = {
 				height: jQuery(step).height(),
 				width: 	jQuery(step).width(),
 				top: 	pos.top,
@@ -126,6 +125,15 @@ function createMenu() {
 			
 		//prevent contextmenu default action
 		return false;
+	
+	jQuery('.step').bind('click', function() {
+		var step_selected = jQuery('.step-selected');
+		jQuery('.edit-frame').hide();
+		//jQuery(this).unwrap('.edit-frame');
+		jQuery(this).toggleClass('step-selected');
+		jQuery(this).wrap('.edit-frame');
+		jQuery('.edit-frame').show();
+		jQuery('.step-selected').not(this).removeClass('step-selected');
 	});
 	
 	jQuery('.menu-item').bind('click', function() {
