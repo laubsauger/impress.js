@@ -58,13 +58,14 @@ body {
     
     min-height: 740px;
 
-    background: rgb(212, 215, 215);
-    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));
-    background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:    -moz-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:      -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:         radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-
+    background: rgb(135, 189, 222);
+	
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(165, 219, 252)), to(rgb(110, 164, 198)));
+    background: -webkit-radial-gradient(rgb(165, 219, 252), rgb(110, 164, 198));
+    background:    -moz-radial-gradient(rgb(165, 219, 252), rgb(110, 164, 198));
+    background:      -o-radial-gradient(rgb(165, 219, 252), rgb(110, 164, 198));
+    background:         radial-gradient(rgb(165, 219, 252), rgb(110, 164, 198));
+	
     -webkit-font-smoothing: antialiased;
 }
 
@@ -91,7 +92,7 @@ a:hover {
     transition:     	background-color 0.5s;
 }
 
-/* COMMON STEP STYLES */
+/* COMMON STEP STYLES (DEMO)*/
 
 .step {
     width: 900px;
@@ -122,7 +123,7 @@ a:hover {
     opacity: 0.3;
 }
 
-/* STEP SPECIFIC STYLES */
+/* STEP SPECIFIC STYLES (DEMO)*/
 
 /* hint on the first slide */
 
@@ -156,7 +157,7 @@ a:hover {
     transition:         opacity 1s,         transform 0.5s 1s;
 }
 
-.step-bored + .hint {
+.step + .hint {
     opacity: 1;
     
     -webkit-transition: opacity 1s 5s, -webkit-transform 0.5s;
@@ -172,7 +173,7 @@ a:hover {
     transform:         translateY(0px);
 }
 
-/*
+/* (DEMO)
  * SLIDE STEP STYLES
  *
  * inspired by: http://html5slides.googlecode.com/svn/trunk/styles.css
@@ -219,7 +220,7 @@ a:hover {
 }
 
 
-/* IMPRESS NOT SUPPORTED STYLES */
+/* IMPRESS NOT SUPPORTED STYLES (DEMO)*/
 
 .fallback-message {
     font-family: sans-serif;
@@ -249,18 +250,17 @@ a:hover {
     display: block;
 }
 
-/* impress.js defaults end    */
-/*----------------------------*/
-/* impress studio start       */
+/* impress.js demo defaults end */
+/*------------------------------*/
+/* impress studio start         */
 
 
-.step + .edit {
-	border: 15px solid black;
+div.step-selected {
+	background: #d6d6d6;
 }
 
 div.menu-wrapper{
-height: 250px;
-
+	height: 250px;
 }
 
 div.menu {
@@ -317,6 +317,27 @@ div.menu {
 		border: 1px solid #000;
 		position:absolute;
 	}
+	.widget {
+		display: none;
+	}
+	
+	.ui-widget {
+		font-size: 12px;
+	}
+	
+	.edit-position label {
+		text-align: right;
+		display: inline-block;
+		width: 30px;
+		margin-right: 15px;
+		padding-bottom: 0.2em;
+	}
+	
+	.edit-position span {
+		font-weight: bold;
+	}
+	
+
 }
 
 /*----------------------------*/
