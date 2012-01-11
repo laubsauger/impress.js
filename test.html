@@ -1,20 +1,32 @@
-<link href="css/impress-demo.css" rel="stylesheet"/><div id="impress" style="position: absolute; -webkit-transform-origin-x: 0%; -webkit-transform-origin-y: 0%; -webkit-transition-property: all; -webkit-transition-duration: 1s; -webkit-transition-timing-function: ease-in-out; -webkit-transform-style: preserve-3d; -webkit-transform: rotateZ(0deg) rotateY(0deg) rotateX(0deg) translate3d(0px, 0px, 0px); -webkit-transition-delay: 0ms; ">
+<link href="css/impress-demo.css" rel="stylesheet"/><div id="impress" style="position: absolute; -webkit-transform-origin-x: 0%; -webkit-transform-origin-y: 0%; -webkit-transition-property: all; -webkit-transition-duration: 1s; -webkit-transition-timing-function: ease-in-out; -webkit-transform-style: preserve-3d; -webkit-transform: rotateZ(0deg) rotateY(0deg) rotateX(0deg) translate3d(-2500px, 0px, 0px); -webkit-transition-delay: 0ms; ">
     <div class="fallback-message">
         <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
         <p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
     </div>
 	
-    <div id="title" class="step active" data-x="0" data-y="0" data-z="0" style="position: absolute; -webkit-transform: translate(-50%, -50%) translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1); -webkit-transform-style: preserve-3d; ">
-        <q>Aren't you already <b>bored</b> by building impress.js presentations with <i>notepad?</i></q>
+    <div id="title" class="step" data-x="0" data-y="0" data-z="0" data-scale="2" data-rotate-x="0" data-rotate-y="90" data-rotate-z="0" style="position: absolute; -webkit-transform: translate(-50%, -50%) translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(90deg) rotateZ(0deg) scaleX(2) scaleY(2) scaleZ(1); -webkit-transform-style: preserve-3d; ">
+        <q>Aren't you already <b>bored</b> by building impress.js presentations with <i>notepad?</i>
+		</q>
     </div>
-	<div class="step slide" data-x="3500" data-y="0" data-z="0" data-scale="3" id="step-2" style="position: absolute; -webkit-transform: translate(-50%, -50%) translate3d(3500px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(3) scaleY(3) scaleZ(1); -webkit-transform-style: preserve-3d; ">
+	<div class="step slide active step-selected" data-x="2500" data-y="0" data-z="0" data-scale="1" id="step-2" style="position: absolute; -webkit-transform: translate(-50%, -50%) translate3d(2500px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1); -webkit-transform-style: preserve-3d; ">
         <q><b>Yes</b>, you are!</q>
-    </div>
+		<p>Cure:</p>
+		<p>1. Right Click to select a Step</p>
+		<p>2. Use toolbar functions to manipulate</p>
+		<p>3. Export html source to clipboard using File &gt; Save</p>
+    <div class="step-edit-overlay" style="display: block; height: 618px; width: 778px; top: 0px; left: 0px; ">
+	<div class="gizmo">
+		<div class="arrow arrow-left"></div>
+		<div class="arrow arrow-top"></div>
+		<div class="arrow arrow-right"></div>
+		<div class="arrow arrow-bottom"></div>
+	</div>
+</div></div>
 	
-	<div class="step" data-x="3500" data-y="7500" data-z="2500" data-scale="3" id="step-3" style="position: absolute; -webkit-transform: translate(-50%, -50%) translate3d(3500px, 7500px, 2500px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(3) scaleY(3) scaleZ(1); -webkit-transform-style: preserve-3d; ">
+	<div class="step" data-x="2500" data-y="1500" data-z="0" data-rotate-y="90" data-rotate-z="45" data-scale="1" id="step-3" style="position: absolute; -webkit-transform: translate(-50%, -50%) translate3d(2500px, 1500px, 0px) rotateX(0deg) rotateY(90deg) rotateZ(45deg) scaleX(1) scaleY(1) scaleZ(1); -webkit-transform-style: preserve-3d; ">
         <q><b>impress.js studio</b></q>
     </div>
 
-	<div id="overview" class="step" data-x="0" data-y="2500" data-z="0" data-scale="15" style="position: absolute; -webkit-transform: translate(-50%, -50%) translate3d(0px, 2500px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(15) scaleY(15) scaleZ(1); -webkit-transform-style: preserve-3d; ">
+	<div id="overview" class="step" data-x="1000" data-y="0" data-z="2500" data-scale="1" style="display: none; position: absolute; -webkit-transform: translate(-50%, -50%) translate3d(1000px, 0px, 2500px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1); -webkit-transform-style: preserve-3d; ">
     </div>
 </div><script src="js/impress.js"></script>
