@@ -12,7 +12,8 @@ function createMenu() {
 	
 	var submenu_cat_old, 
 		submenu_all = jQuery('.submenu'),
-		livelog_div = jQuery('.livelog');
+		livelog_div = jQuery('.livelog'),
+		stepIdWasActive;
 		
 	function displaySubmenu(oMenuitem, osubmenu, position) {
 		jQuery(osubmenu).each(function(index, domEle){
@@ -31,6 +32,8 @@ function createMenu() {
 		$(elem).html($(elem).html() + "<p> " + msg + "</p>");	
 		//keep log scrolled to bottom
 		$(elem).prop('scrollTop', $(elem).prop('scrollHeight'));
+		
+		//@todo: keep (displayed) log short or we will get hundreds of elements in a long session
 	}
 	
 	function openWidget(step, operation) {
@@ -66,6 +69,7 @@ function createMenu() {
 						"to Clipboard": function() { $(this).dialog("close"); }
 					},
 					width: 500,
+					resizable: false,
 					title: title + '<b style="color: red;">unclean solution - uses already manipulated DOMtree - but works :D</b>'
 				};
 				
@@ -83,17 +87,27 @@ function createMenu() {
 			moveZ,
 			stepData = getStepData(step),
 			stepDim = getStepDim(step),
+			PosDataNew,
 			options = {
 					buttons: {
 						"Refresh": function() {
-							//Reload position (real and data) for step
+							//Reload step position 
 							refreshWidgetData();
 						},
 						"Apply": function() {
-							//Apply new position (real and/or data) to step
+						
+							//get inputs
+							PosDataNew = getInputStepData();
+							//Apply new step position 
+							setStepDataPos(step, PosDataNew.dataX, PosDataNew.dataY, PosDataNew.dataZ);
+							
+							refreshWidgetData();
+							//and redraw
+							//drawCanvas(document, window);
 						}
 					},
 					width: 215,
+					resizable: false,
 					title: title + jQuery(step).attr('id')
 				};
 				
@@ -109,7 +123,20 @@ function createMenu() {
 				jQuery('#data-x').text(stepData.x);
 				jQuery('#data-y').text(stepData.y);
 				jQuery('#data-z').text(stepData.z);
-			}			
+			}
+
+			function getInputStepData() {
+				var PosData = {
+					height: jQuery('#input-height').val(),
+					width: 	jQuery('#input-width').val(),
+					top: 	jQuery('#input-top').val(),
+					left: 	jQuery('#input-left').val(),
+					dataX: 	jQuery('#input-data-x').val(),
+					dataY: 	jQuery('#input-data-y').val(),
+					dataZ: 	jQuery('#input-data-z').val()
+				}	
+				return PosData;
+			}
 			
 			jQuery(widget).dialog('option',options);
 			refreshWidgetData();
@@ -120,9 +147,9 @@ function createMenu() {
 	
 	function getStepData (step) {
 		var stepData = {
-                    x: $(step).data('x') || 0,
-                    y: $(step).data('y') || 0,
-                    z: $(step).data('z') || 0
+                    x: jQuery(step).data('x') || 0,
+                    y: jQuery(step).data('y') || 0,
+                    z: jQuery(step).data('z') || 0
 			};
 		return stepData;
 	}
@@ -144,40 +171,66 @@ function createMenu() {
 		step.attr('data-rotate-z', parseInt(rotateZ) || 0);
 	}
 	
-	function moveStep(step, moveX, moveY, moveZ) {
-		var posX = step.attr('data-x'),
-			posY = step.attr('data-y'),
-			posZ = step.attr('data-z');
+	function setStepDataPos(step, moveDataX, moveDataY, moveDataZ) {
+		//get step posi
+		var pos = getStepData(step);
 			
-		step.attr('data-x', posX + ( parseInt(moveX) || 0 ));
-		step.attr('data-y', posY + ( parseInt(moveY) || 0 ));
-		step.attr('data-z', posZ + ( parseInt(moveZ) || 0 ));
+		step.attr('data-x', pos.x + ( parseInt(moveDataX) || 0 ));
+		step.attr('data-y', pos.y + ( parseInt(moveDataY) || 0 ));
+		step.attr('data-z', pos.z + ( parseInt(moveDataZ) || 0 ));
 	}
 	
 	//right click step to select it for editing
 	jQuery('.step').bind('contextmenu', function(e) {
 		var step_selected 	= jQuery('.step-selected'), 
-			editFrame 		= jQuery('.edit-frame'),
-			stepDim 		= getStepDim (this);
+			stepOverlay		= jQuery('.step-edit-overlay'),
+			stepDim 		= getStepDim (this),
+			stepIdActive   	= $(this).attr('id'),
+			overlayVisible	= jQuery('.step-edit-overlay:visible').length || 0;
 			
-		livelog (livelog_div, "<b>" + this.getAttribute('id') + " </b> selected");
-		livelog (livelog_div, "X " + stepDim.left + " Y: " + stepDim.top + " | Dim " + stepDim.height + " x " + stepDim.width);
-		
 		//highlight selected frame
 		jQuery(this).toggleClass('step-selected');
 		jQuery('.step-selected').not(this).removeClass('step-selected');
+				
+		//apply/remove overlay
+		if (overlayVisible === 0) {
+			jQuery(this).append(stepOverlay);
+			jQuery(stepOverlay).show();
+			resizeOverlay();
 			
+			//push some step data to log 
+			livelog (livelog_div, "<b>" + this.getAttribute('id') + " </b> selected");
+			livelog (livelog_div, "X " + stepDim.left + " Y " + stepDim.top + " | Dim " + stepDim.height + " x " + stepDim.width);
+		} else if (stepIdWasActive === stepIdActive) { 
+			jQuery(stepOverlay).hide();
+		} else if (stepIdWasActive !== stepIdActive) {
+			jQuery(this).append(stepOverlay);
+			jQuery(stepOverlay).show();
+			resizeOverlay();
+			
+			//push some step data to log 
+			livelog (livelog_div, "<b>" + this.getAttribute('id') + " </b> selected");
+			livelog (livelog_div, "X " + stepDim.left + " Y " + stepDim.top + " | Dim " + stepDim.height + " x " + stepDim.width);
+		}
+		
+		stepIdWasActive = stepIdActive;
+		
+		function resizeOverlay() {
+			$(stepOverlay).css({height: (stepDim.height) + "px", width: (stepDim.width) + "px", top: 0 + "px", left: 0 + "px"})
+			//@todo: respect scale / perspective to fit properly
+		}
+		
 		//prevent contextmenu default action
 		e.preventDefault();
 		return false;
 	});
 	
 	jQuery('.menu-item').bind('click', function() {
-		var menuitem 	= this,
-		position 		= jQuery(menuitem).position(),	
-		submenu_cat 	= menuitem.getAttribute('id'),
-		submenu 		= jQuery('.' + submenu_cat + '-sub'),
-		submenu_vis_ln	= jQuery('.submenu:visible').length;
+		var menuitem 		= this,
+			position 		= jQuery(menuitem).position(),	
+			submenu_cat 	= menuitem.getAttribute('id'),
+			submenu 		= jQuery('.' + submenu_cat + '-sub'),
+			submenu_vis_ln	= jQuery('.submenu:visible').length;
 		
 		jQuery(menuitem).toggleClass('menu-item-active');
 		
@@ -206,38 +259,38 @@ function createMenu() {
 			jQuery(submenu_all).hide();
 			switch (submenuFunc) {
 				case "save": 
-					livelog (livelog_div,"<i>submenu:save</i>");
+					livelog (livelog_div, "<i>submenu:save</i>");
 					openWidget(step, submenuFunc);
 					break;
 
 				case "load": 
-					livelog (livelog_div,"<i>submenu:load</i>");
+					livelog (livelog_div, "<i>submenu:load</i>");
 					break;
 
 				case "clone": 
-					livelog (livelog_div,"<i>submenu:clone</i>");
+					livelog (livelog_div, "<i>submenu:clone</i>");
 					
 					//recreate "canvas" after dom-manipulation
 					//drawCanvas(document, window);
 					break;
 
 				case "new-step": 
-					livelog (livelog_div,"<i>submenu:new-step</i>");
+					livelog (livelog_div, "<i>submenu:new-step</i>");
 					break;
 
 				case "edit-content": 
-					livelog (livelog_div,"<i>submenu:edit-content</i>");
+					livelog (livelog_div, "<i>submenu:edit-content</i>");
 					break;
 				
 				case "edit-position":
-					livelog (livelog_div,"<i>submenu:edit-position</i>");
+					livelog (livelog_div, "<i>submenu:edit-position</i>");
 					
 					var step = jQuery('.step-selected');
 					
 					if(step.length > 0) {
 						openWidget(step, submenuFunc);
 					}else {
-						livelog (livelog_div,'--no step was selected!');
+						livelog (livelog_div, "--> error: can't edit - no step selected!");
 					}
 					
 					//recreate "canvas" after dom-manipulation
