@@ -7,7 +7,7 @@
  * 
  */
  
-function createMenu() {
+function createGui() {
 	'use strict';
 	
 	var submenu_cat_old, 
@@ -52,12 +52,14 @@ function createMenu() {
 			
 		if(operation === 'edit-position') {
 			editPosition(step, widget, title);
+		} else if (operation === 'edit-content') {
+			createEditor(step, widget, title);
 		} else if (operation === 'save') {
-			save (step, widget, title);
+			exportToClip (step, widget, title);
 		}
 	}
 	
-	function onCloseWidgetRemoveGizmos (stepOverlay, widget) {
+	function onCloseWidgetRemoveGizmos (stepOverlay) {
 		$(stepOverlay).hide();
 	}
 	
@@ -65,7 +67,7 @@ function createMenu() {
 		//mockmock
 	}
 	
-	function save (step, widget, title) {
+	function exportToClip (step, widget, title) {
 		var container = $('#impress'), 
 				htmlStr, jsFile, cssFile,
 				options = {
@@ -103,21 +105,17 @@ function createMenu() {
 							refreshWidgetData();
 						},
 						"Apply": function() {
-						
 							//get inputs
 							PosDataNew = getInputStepData();
 							//Apply new step position 
 							setStepDataPos(step, PosDataNew.dataX, PosDataNew.dataY, PosDataNew.dataZ);
-							
 							refreshWidgetData();
-							//and redraw
-							//drawCanvas(document, window);
 						}
 					},
-					beforeClose: function() {onCloseWidgetRemoveGizmos (stepOverlay, widget)},
+					beforeClose: function() {onCloseWidgetRemoveGizmos (stepOverlay)},
 					width: 215,
 					resizable: false,
-					title: title + jQuery(step).attr('id')
+					title: title + stepIdActive
 				};
 			
 			//apply/remove overlay
@@ -210,22 +208,31 @@ function createMenu() {
 	}
 	
 	
-/* jush's slide content editor */ 
-	function createEditor (step) {
+/* base: jush's slide content editor */ 
+	function createEditor (step, widget, title) {
 		// Replace the contents of the current slide with its own html to be edited
-		var ownHtml = $(step).html();
-		$(step).append('<textarea class="impress_slide_content">' +  ownHtml + '</textarea>');
+		var ownHtml = $(step).html(),
+			options = {
+					buttons: {
+						"Apply": function() {saveContent(step)}
+					},
+					width: 500,
+					resizable: true,
+					title: title + jQuery(step).attr('id')
+				};
+				
+		jQuery(widget).dialog('option',options);
+		$('.widget.edit-content').append('<textarea class="impress_slide_content" cols="75" row="35">' +  ownHtml + '</textarea>');
 
 		// Disable click handle
 		$(step).off("click");
 		document.removeEventListener("keydown", document.filterKeys, false);
-
+		
 		// Add button to save changes
-		$(step).append($('<button type="button">Save</button>').click({slide:this}, saveContent));
+		//$(step).append($('<button type="button">Save</button>').click({slide:this}, saveContent));
 	}
 
-	function saveContent (event) {
-		var slide = event.data.slide;
+	function saveContent (slide) {
 		$(slide).click(createEditor);
 		var newContent = $(slide).children(".impress_slide_content")[0].value;
 		$(slide).empty();
@@ -234,8 +241,10 @@ function createMenu() {
 		document.addEventListener("keydown", document.filterKeys, false);
 		// Avoid calling createEditor immediately by not propagating the event
 		return false;
+		
+		//@todo: make it work in with crappy code ;)
 	}
-/* jush's slide content editor */ 	
+/* base: jush's slide content editor END */ 	
 
 	
 	//right click step to select it for editing
@@ -295,12 +304,15 @@ function createMenu() {
 		submenu_cat_old = submenu_cat;
 	});
 
+	
+	//populate submenus with functions
 	submenu_all.each(function(index, domEle) {
 		var submenuId 	= domEle.getAttribute('data-submenu-id'),
 			submenuFunc	= domEle.getAttribute('data-submenu-func');
 		
 		jQuery(domEle).bind('click', function() {
 			jQuery(submenu_all).hide();
+			var step = jQuery('.step-selected');
 			switch (submenuFunc) {
 				case "save": 
 					livelog (livelog_div, "<i>submenu:save</i>");
@@ -314,8 +326,6 @@ function createMenu() {
 				case "clone": 
 					livelog (livelog_div, "<i>submenu:clone</i>");
 					
-					//recreate "canvas" after dom-manipulation
-					//drawCanvas(document, window);
 					break;
 
 				case "new-step": 
@@ -325,30 +335,21 @@ function createMenu() {
 				case "edit-content": 
 					livelog (livelog_div, "<i>submenu:edit-content</i>");
 					
-					var step = jQuery('.step-selected');
-					
 					if(step.length > 0) {
 						openWidget(step, submenuFunc);
 					}else {
 						livelog (livelog_div, "--> error: can't edit - no step selected!");
 					}
-					createEditor(step);
-					
 					break;
 				
 				case "edit-position":
 					livelog (livelog_div, "<i>submenu:edit-position</i>");
-					
-					var step = jQuery('.step-selected');
-					
+										
 					if(step.length > 0) {
 						openWidget(step, submenuFunc);
 					}else {
 						livelog (livelog_div, "--> error: can't edit - no step selected!");
 					}
-					
-					//recreate "canvas" after dom-manipulation
-					//drawCanvas(document, window);
 					break;
 					
 				case "view-styles": 
@@ -364,4 +365,4 @@ function createMenu() {
 		});
 	});
 }
-jQuery(document).ready( createMenu() );
+jQuery(document).ready( createGui() );

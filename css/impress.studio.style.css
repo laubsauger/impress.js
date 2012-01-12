@@ -435,6 +435,7 @@ a:hover {
 	}
 	
 	.widget textarea {
+		min-height: 150px;
 		border: none;
 		color: rgba(255, 255, 255, 1);
 		background: rgba(135, 135, 135, 0.8);
