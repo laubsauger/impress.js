@@ -218,10 +218,12 @@ function createGui() {
 					},
 					width: 500,
 					resizable: true,
+					beforeClose: function () {$(widget).children('.impress_slide_content').remove()},
 					title: title + jQuery(step).attr('id')
 				};
-				
-		jQuery(widget).dialog('option',options);
+		
+		$(widget).children('.impress_slide_content').remove();
+		jQuery(widget).dialog('option', options);
 		$('.widget.edit-content').append('<textarea class="impress_slide_content" cols="75" row="35">' +  ownHtml + '</textarea>');
 
 		// Disable click handle
@@ -334,7 +336,6 @@ function createGui() {
 
 				case "edit-content": 
 					livelog (livelog_div, "<i>submenu:edit-content</i>");
-					
 					if(step.length > 0) {
 						openWidget(step, submenuFunc);
 					}else {
