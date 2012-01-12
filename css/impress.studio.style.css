@@ -59,13 +59,11 @@ body {
     min-height: 740px;
 
     background: rgb(135, 189, 222);
-	
     background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(165, 219, 252)), to(rgb(110, 164, 198)));
     background: -webkit-radial-gradient(rgb(165, 219, 252), rgb(110, 164, 198));
     background:    -moz-radial-gradient(rgb(165, 219, 252), rgb(110, 164, 198));
     background:      -o-radial-gradient(rgb(165, 219, 252), rgb(110, 164, 198));
     background:         radial-gradient(rgb(165, 219, 252), rgb(110, 164, 198));
-	
     -webkit-font-smoothing: antialiased;
 }
 
@@ -95,7 +93,7 @@ a:hover {
 /* COMMON STEP STYLES (DEMO)*/
 
 .step {
-    width: 600px;
+    width: 700px;
     padding: 40px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing:    border-box;
@@ -120,7 +118,7 @@ a:hover {
 }
 
 .step:not(.active) {
-    opacity: 0.2;
+    opacity: 0.4;
 }
 
 /* STEP SPECIFIC STYLES (DEMO)*/
@@ -184,7 +182,7 @@ a:hover {
 .slide {
     display: block;
 
-    width: 600px;
+    width: 700px;
     height: 600px;
 
     padding: 40px 60px;
@@ -212,7 +210,7 @@ a:hover {
     font-size: 50px;
     line-height: 72px;
 
-    margin-top: 100px;
+    margin-top: 75px;
 }
 
 .slide q strong {
@@ -472,4 +470,11 @@ a:hover {
 		 -webkit-transform: rotate(270deg);
 		-moz-transform: rotate(270deg);
 	}
+}
+
+/* step customizing */
+#blub {
+width: 2800px;
+height: 900px;
+	/*background-image: url('http://www.wallpaper4me.com/images/wallpapers/panorammountainlake-447435.jpeg');*/
 }
