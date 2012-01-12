@@ -13,7 +13,8 @@ function createGui() {
 	var submenu_cat_old, 
 		submenu_all = jQuery('.submenu'),
 		livelog_div = jQuery('.livelog'),
-		stepIdWasActive;
+		stepIdWasActive,
+		stepOverlay = $('.step-edit-overlay');
 		
 	function displaySubmenu (oMenuitem, osubmenu, position) {
 		jQuery(osubmenu).each(function(index, domEle){
@@ -59,7 +60,8 @@ function createGui() {
 		}
 	}
 	
-	function onCloseWidgetRemoveGizmos (stepOverlay) {
+	function removeEditGizmos (stepOverlay) {
+		$('body').append(stepOverlay);
 		$(stepOverlay).hide();
 	}
 	
@@ -76,7 +78,7 @@ function createGui() {
 					},
 					width: 500,
 					resizable: false,
-					title: title + '<b style="color: red;">unclean solution - uses already manipulated DOMtree - but works :D</b>'
+					title: title + '<b style="color: red;">unclean solution - uses already manipulated DOMtree</b>'
 				};
 				
 		jQuery(widget).dialog( "option", options);
@@ -94,7 +96,6 @@ function createGui() {
 			stepData = getStepData(step),
 			stepDim = getStepDim(step),
 			PosDataNew,
-			stepOverlay		= $('.step-edit-overlay'),
 			stepDim 		= getStepDim (step),
 			stepIdActive   	= $(step).attr('id'),
 			overlayVisible	= $('.step-edit-overlay:visible').length || 0,
@@ -112,7 +113,7 @@ function createGui() {
 							refreshWidgetData();
 						}
 					},
-					beforeClose: function() {onCloseWidgetRemoveGizmos (stepOverlay)},
+					beforeClose: function() {removeEditGizmos (stepOverlay)},
 					width: 215,
 					resizable: false,
 					title: title + stepIdActive
@@ -131,7 +132,7 @@ function createGui() {
 				resizeOverlay();
 			}
 				
-				stepIdWasActive = stepIdActive;
+			stepIdWasActive = stepIdActive;
 			
 			function resizeOverlay() {
 				$(stepOverlay).css({height: (stepDim.height) + "px", width: (stepDim.width) + "px", top: 0 + "px", left: 0 + "px"})
@@ -210,6 +211,8 @@ function createGui() {
 	
 /* base: jush's slide content editor */ 
 	function createEditor (step, widget, title) {
+	    
+		removeEditGizmos (stepOverlay);
 		// Replace the contents of the current slide with its own html to be edited
 		var ownHtml = $(step).html(),
 			options = {
@@ -217,37 +220,135 @@ function createGui() {
 						"Apply": function() {saveContent(step)}
 					},
 					width: 500,
-					resizable: true,
+					resizable: false,
 					beforeClose: function () {$(widget).children('.impress_slide_content').remove()},
 					title: title + jQuery(step).attr('id')
 				};
+				
+		// Disable click handle
+		$(step).off("click");
+		
+		document.removeEventListener("keydown", document.filterKeys,  false);
 		
 		$(widget).children('.impress_slide_content').remove();
 		jQuery(widget).dialog('option', options);
 		$('.widget.edit-content').append('<textarea class="impress_slide_content" cols="75" row="35">' +  ownHtml + '</textarea>');
 
-		// Disable click handle
-		$(step).off("click");
-		document.removeEventListener("keydown", document.filterKeys, false);
-		
-		// Add button to save changes
-		//$(step).append($('<button type="button">Save</button>').click({slide:this}, saveContent));
+
 	}
 
 	function saveContent (slide) {
 		$(slide).click(createEditor);
-		var newContent = $(slide).children(".impress_slide_content")[0].value;
+		var newContent = $(".impress_slide_content")[0].value;
 		$(slide).empty();
 		$(slide).append(newContent);
+		
 		// Re-enable impress.js key navigation
 		document.addEventListener("keydown", document.filterKeys, false);
+		
 		// Avoid calling createEditor immediately by not propagating the event
 		return false;
-		
-		//@todo: make it work in with crappy code ;)
 	}
 /* base: jush's slide content editor END */ 	
 
+/* base: naugturs position editor PoC */
+/* 
+* Proof of concept editor for bartaz's impress.js
+* by naugtur
+* MIT License if anybody asked 
+*
+*/
+$(function(){
+  var state={
+			editing: false,
+			node: false,
+			data: {
+				x: 0,
+				y: 0,
+				rotate: 0,
+				scale: 0
+			}
+      },
+    config= {
+		rotateStep: 3,
+		scaleStep: 1,
+		moveStep: 50
+      },
+    defaults= {
+		x: 0,
+		y: 0,
+		rotate: 0,
+		scale: 1
+      };
+	  
+  $('body').on('mousedown','.step',function(e){
+    state.editing=true;
+    state.node=$(this);
+    state.node.fadeTo(0.6);
+    });
+	
+  $('body').on('mouseup','.step',function(e){
+    state.editing=false;
+    var $t=$(this);
+    $t.fadeTo(1);
+    });
+    
+  $('body').on('keypress',function(e){
+    if(state.editing){
+      var $t=state.node;
+      for(var i in state.data){
+        var tmp=$t.attr('data-'+i);
+        if(tmp===''){tmp=defaults[i]}
+        state.data[i]= ~~(tmp);
+        }
+        //console.log(['before...',state.data,state.node[0]]);
+       
+      switch(e.which){
+        case 113: //q
+          state.data.rotate-=config.rotateStep;
+	        break;
+        case 119: //w
+          state.data.y-=config.moveStep;
+	        break;
+        case 101: //e
+          state.data.rotate+=config.rotateStep;
+	        break;
+        case 97: //a
+          state.data.x-=config.moveStep;
+	        break;
+        case 115: //s
+          state.data.y+=config.moveStep;
+	        break;
+        case 100: //d
+          state.data.x+=config.moveStep;
+	        break;
+        case 122: //z
+          state.data.scale+=config.scaleStep;
+	        break;
+        case 120: //x
+          state.data.scale-=config.scaleStep;
+	        break;
+          
+        default:
+          console.log(e.which);
+          
+          //yeah, I know, but it looks better when it's here
+          break;
+      
+      
+        }
+      //console.log(['done...',state.data,state.node[0]]);
+      //reapply all. damn slow  
+      for(var i in state.data){
+        $t.attr('data-'+i,state.data[i]);
+        }
+        
+      window['--drawSlideGlobalHandler'](state.node[0],'whatever')
+        
+      }
+    });
+});
+/* base: naugturs position editor PoC  END */
 	
 	//right click step to select it for editing
 	jQuery('.step').bind('contextmenu', function(e) {

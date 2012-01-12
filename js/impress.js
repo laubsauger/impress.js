@@ -76,9 +76,9 @@ function drawCanvas( document, window ) {
     };
     
     var rotate = function ( r, revert ) {
-        var rX	= " rotateX(" + r.x + "deg) ",
-			 rY	= " rotateY(" + r.y + "deg) ",
-             rZ   	= " rotateZ(" + r.z + "deg) ";
+        var rX = " rotateX(" + r.x + "deg) ",
+			rY = " rotateY(" + r.y + "deg) ",
+            rZ = " rotateZ(" + r.z + "deg) ";
         
         return revert ? rZ+rY+rX : rX+rY+rZ;
     };
@@ -145,7 +145,7 @@ function drawCanvas( document, window ) {
         scale:     { x: 1, y: 1, z: 1 }
     };
 
-    steps.forEach(function ( el, idx ) {
+    var drawSlide=function ( el, idx ) {
         var data = el.dataset,
             step = {
                 translate: {
@@ -179,8 +179,12 @@ function drawCanvas( document, window ) {
                        scale(step.scale),
             transformStyle: "preserve-3d"
         });
-        
-    });
+    }
+    
+    //awkward "API" for naugturs PosEdit - This should not work like that I guess ;)
+    window['--drawSlideGlobalHandler']=drawSlide;
+    
+    steps.forEach(drawSlide);
 
     // making given step active
 
@@ -259,6 +263,7 @@ function drawCanvas( document, window ) {
     document.addEventListener("keydown", function ( event ) {
         if ( event.keyCode == 9 || ( event.keyCode >= 32 && event.keyCode <= 34 ) || (event.keyCode >= 37 && event.keyCode <= 40) ) {
             var next = active;
+			console.log(event.keyCode);
             switch( event.keyCode ) {
                 case 33: ; // pg up
                 case 37: ; // left
@@ -311,7 +316,6 @@ function drawCanvas( document, window ) {
         // so both "fallback" `#slide-id` and "enhanced" `#/slide-id` will work
         return byId( window.location.hash.replace(/^#\/?/,"") );
     }
-	
     window.addEventListener("hashchange", function () {
         select( getElementFromUrl() );
     }, false);
