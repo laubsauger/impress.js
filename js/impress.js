@@ -316,6 +316,7 @@ function drawCanvas( document, window ) {
         // so both "fallback" `#slide-id` and "enhanced" `#/slide-id` will work
         return byId( window.location.hash.replace(/^#\/?/,"") );
     }
+	
     window.addEventListener("hashchange", function () {
         select( getElementFromUrl() );
     }, false);

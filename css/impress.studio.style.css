@@ -95,7 +95,7 @@ a:hover {
 /* COMMON STEP STYLES (DEMO)*/
 
 .step {
-    width: 900px;
+    width: 600px;
     padding: 40px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing:    border-box;
@@ -184,8 +184,8 @@ a:hover {
 .slide {
     display: block;
 
-    width: 900px;
-    height: 700px;
+    width: 600px;
+    height: 600px;
 
     padding: 40px 60px;
 
